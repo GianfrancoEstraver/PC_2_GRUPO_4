@@ -1,12 +1,12 @@
 package MiAporte;
 
 // @author 7zacg
-public class NodoPilaU {
+public class NodoPila {
 
     String tarea;
-    NodoPilaU siguiente;
+    NodoPila siguiente;
 
-    NodoPilaU(String tarea) {
+    NodoPila(String tarea) {
         this.tarea = tarea;
         this.siguiente = null;
     }
