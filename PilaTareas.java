@@ -1,12 +1,12 @@
 package MiAporte;
 
 // @author 7zacg
-public class PilaTareasU {
+public class PilaTareas {
 
-    private NodoPilaU cima;
+    private NodoPila cima;
 
     // Constructor
-    public PilaTareasU() {
+    public PilaTareas() {
         cima = null;
     }
 
