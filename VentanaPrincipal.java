@@ -10,6 +10,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private ListaEnlazada lista;
     private DefaultTableModel modelo;
 
+    private PilaTareasU pilaTareasU; // Declarar la pila de tareas
+
     public VentanaPrincipal() {
         lista = new ListaEnlazada();
         txtTarea = new JTextField(20);
@@ -34,6 +36,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
         txtTarea = new javax.swing.JTextField();
+        btnMostrarPila = new javax.swing.JButton();
+        txtImportancia = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -78,17 +84,39 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tabla);
 
+        btnMostrarPila.setText("Convertir a una Pila");
+        btnMostrarPila.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMostrarPilaActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Nombre de la tarea");
+
+        jLabel2.setText("Importancia");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addComponent(txtTarea, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnMostrarPila)
+                        .addGap(108, 108, 108))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtTarea)
+                                .addComponent(txtImportancia, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE))
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAgregar)
                     .addComponent(btnEliminar)
@@ -99,76 +127,117 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(59, 59, 59)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnAgregar)
-                    .addComponent(txtTarea, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnEliminar)
-                .addGap(18, 18, 18)
-                .addComponent(btnBuscar)
-                .addGap(18, 18, 18)
-                .addComponent(btnMostrar)
-                .addGap(37, 37, 37)
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnAgregar)
+                            .addComponent(txtTarea, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(15, 15, 15)
+                        .addComponent(btnEliminar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnBuscar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnMostrar)
+                            .addComponent(btnMostrarPila)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addComponent(jLabel2)
+                        .addGap(11, 11, 11)
+                        .addComponent(txtImportancia, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(61, 61, 61))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        String descripcion = txtTarea.getText();
-    if (!descripcion.isEmpty()) {
-        lista.agregarTarea(descripcion);  // Agregar la tarea a la lista enlazada
-        modelo.addRow(new Object[]{descripcion});  // Agregar la tarea al JTable a través del modelo
-        txtTarea.setText("");  // Limpiar el campo de texto
-        JOptionPane.showMessageDialog(null, "Tarea agregada exitosamente.");
-    } else {
-        JOptionPane.showMessageDialog(null, "Debe ingresar una tarea.");
-    }
+     agregarTarea();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-       String descripcion = txtTarea.getText(); // Obtener el nombre de la tarea desde el campo de texto
-
-    if (descripcion.isEmpty()) {
-        JOptionPane.showMessageDialog(null, "Debe ingresar una tarea para eliminar.");
-        return; // Salir del método si no se ingresa una descripción
-    }
-
-    // Intentar eliminar la tarea de la lista enlazada
-    if (lista.eliminarTarea(descripcion)) {
-        // Recorrer la tabla para encontrar la fila con la tarea a eliminar
-        for (int i = 0; i < modelo.getRowCount(); i++) {
-            if (modelo.getValueAt(i, 0).equals(descripcion)) {
-                modelo.removeRow(i);  // Eliminar la fila del JTable
-                JOptionPane.showMessageDialog(null, "Tarea eliminada exitosamente.");
-                break; // Salir del bucle después de eliminar la fila
-            }
-        }
-    } else {
-        JOptionPane.showMessageDialog(null, "Tarea no encontrada.");
-    }
-
-    txtTarea.setText("");
+       eliminarTarea();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarActionPerformed
-        modelo.setRowCount(0); // Limpiar el contenido de la tabla antes de mostrar
-    lista.mostrarTareas(modelo);
+        mostrarTareas();
     }//GEN-LAST:event_btnMostrarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        String descripcion = txtTarea.getText();
-    if (lista.buscarTarea(descripcion)) {
-        JOptionPane.showMessageDialog(null, "Tarea encontrada.");
-    } else {
-        JOptionPane.showMessageDialog(null, "Tarea no encontrada.");
-    }
-    txtTarea.setText("");
+        buscarTarea();
     }//GEN-LAST:event_btnBuscarActionPerformed
 
+    private void btnMostrarPilaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarPilaActionPerformed
+
+       mostrarPila();
+    }//GEN-LAST:event_btnMostrarPilaActionPerformed
+
+    private void agregarTarea() {
+        String descripcion = txtTarea.getText();
+        String importanciaStr = txtImportancia.getText();
+        if (!descripcion.isEmpty() && !importanciaStr.isEmpty()) {
+            int importancia = Integer.parseInt(importanciaStr); // Convertir a entero
+            lista.agregarTarea(descripcion, importancia); // Agregar tarea con importancia
+            modelo.addRow(new Object[]{descripcion, importancia}); // Agregar a la tabla
+            txtTarea.setText(""); // Limpiar campo de tarea
+            txtImportancia.setText(""); // Limpiar campo de importancia
+            JOptionPane.showMessageDialog(null, "Tarea agregada exitosamente.");
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe ingresar una tarea y su importancia.");
+        }
+    }
+    private void eliminarTarea() {
+        String descripcion = txtTarea.getText();
+        if (lista.eliminarTarea(descripcion)) {
+            JOptionPane.showMessageDialog(null, "Tarea eliminada.");
+            mostrarTareas(); // Actualizar la tabla
+        } else {
+            JOptionPane.showMessageDialog(null, "Tarea no encontrada.");
+        }
+        txtTarea.setText("");
+    }
+    private void mostrarTareas() {
+        modelo.setRowCount(0); // Limpiar la tabla
+        lista.mostrarTareas(modelo); // Llenar la tabla con tareas
+    }
+
+    private void buscarTarea() {
+        String descripcion = txtTarea.getText();
+        if (lista.buscarTarea(descripcion)) {
+            JOptionPane.showMessageDialog(null, "Tarea encontrada.");
+        } else {
+            JOptionPane.showMessageDialog(null, "Tarea no encontrada.");
+        }
+        txtTarea.setText("");
+    }
+    private void mostrarPila() {
+        pilaTareasU = new PilaTareasU(100); // Reinicializa la pila
+        Nodo actual = lista.cabeza;
+        
+        while (actual != null) {
+            pilaTareasU.apilar(actual.tarea, actual.importancia); // Agregar tareas a la pila
+            actual = actual.siguiente;
+        }
+
+        // Ordenar la pila por importancia
+        pilaTareasU.ordenarPilaPorImportancia();
+
+        modelo.setRowCount(0); // Limpiar la tabla
+
+        // Mostrar la pila en la tabla
+        for (Tarea tarea : pilaTareasU.mostrarPila()) {
+            if (tarea != null) {
+                modelo.addRow(new Object[]{tarea.tarea, tarea.importancia}); // Agregar a la tabla
+            }
+        }
+
+        JOptionPane.showMessageDialog(null, "La lista de tareas se ha convertido en una pila.");
+    }
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -198,14 +267,19 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
     }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnMostrar;
+    private javax.swing.JButton btnMostrarPila;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabla;
+    private javax.swing.JTextField txtImportancia;
     private javax.swing.JTextField txtTarea;
     // End of variables declaration//GEN-END:variables
 }

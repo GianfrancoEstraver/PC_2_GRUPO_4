@@ -1,9 +1,11 @@
 public class Nodo {
-    String descripcion;
+    String tarea;
+    int importancia; // Agregamos el campo para la importancia
     Nodo siguiente;
 
-    public Nodo(String descripcion) {
-        this.descripcion = descripcion;
+    public Nodo(String tarea, int importancia) {
+        this.tarea = tarea;
+        this.importancia = importancia; // Inicializar la importancia
         this.siguiente = null;
     }
 }
